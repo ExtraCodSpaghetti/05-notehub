@@ -24,7 +24,7 @@ export default function App() {
 
   const { data, isLoading, isError, isSuccess } = useQuery<FetchNotesResponse>({
     queryKey: ['notes', page, debouncedSearchTerm],
-    queryFn: () => fetchNotes(page, 12, debouncedSearchTerm),
+    queryFn: () => fetchNotes(page, debouncedSearchTerm),
     placeholderData: keepPreviousData,
   });
 
@@ -45,14 +45,9 @@ export default function App() {
       </header>
     <div className={css.app}>
 
-      {isModalOpen && (
-        <NoteModal
-          onClose={() => setIsModalOpen(false)}
-          onSuccess={() => {
-            setIsModalOpen(false);
-          }}
-        />
-      )}
+{isModalOpen && (
+  <NoteModal onClose={() => setIsModalOpen(false)} />
+)}
 
       {isLoading && <Loader />}
       {isError && <ErrorMessage message="Something went wrong. Please try again." />}
